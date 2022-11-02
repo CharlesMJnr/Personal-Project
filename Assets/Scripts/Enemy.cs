@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour
 
     private void OnMouseDown()
     {
+        PlayerController.money++;
         Destroy(gameObject);
     }
 

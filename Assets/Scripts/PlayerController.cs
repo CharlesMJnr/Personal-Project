@@ -14,11 +14,15 @@ public class PlayerController : MonoBehaviour
     private float topZBound = 8.5f;
     private float bottomZbound = -3f;
     private float cameraToPlaneDist = 10;
+    private float shootMinRange = -8;
 
     [SerializeField] private int maxAmmo = 5;
     private int ammo;
 
     [SerializeField] TextMeshProUGUI ammoCountText;
+    [SerializeField] TextMeshProUGUI moneyCountText;
+    
+    public static int money = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +36,27 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         ammoCountText.text = $"Ammo: {ammo}";
+        moneyCountText.text = $"Money: {money}";
+        if (Input.GetMouseButtonDown(0) && transform.position.x > shootMinRange)
+        {
+            Shoot();
+        }
     }
+
+    private void Shoot()
+    {
+        if(ammo > 0)
+        {
+            //fire gun when ammo is available
+            ammo--;
+        }
+        else
+        {
+            //reload when empty and trying to shoot
+            ammo = maxAmmo;
+        }
+    }
+
 
     void MovePlayer()
     {
@@ -53,31 +77,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void onMouseDown()
-    {
-        Debug.Log("Mouse Clicks");
-        if (ammo > 0)
-        {
-            Shoot();
-        }
-        else
-        {
-            Reload();
-        }
-    }
-
-    public void Shoot()
-    {
-        ammo--;
-    }
-
-    private void Reload()
-    {
-        //ammo = maxAmmo;
-    }
-
     public void UpgradeAmmo()
     {
-        maxAmmo = Mathf.RoundToInt((float)(maxAmmo * 1.5));
+        maxAmmo = Mathf.FloorToInt((float)(maxAmmo * 1.2));
     }
 }
