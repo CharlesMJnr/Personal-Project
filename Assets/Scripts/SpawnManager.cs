@@ -10,7 +10,8 @@ public class SpawnManager : MonoBehaviour
     private float bottomBound = -3.0f;
     private float rightSpawn = 27.5f;
     private float startDelay = 2.0f;
-    private float spawnDelay = 5f;
+    private float spawnDelay = 2f;
+
 
     // Start is called before the first frame update
     void Start()

@@ -34,8 +34,12 @@ public class Enemy : MonoBehaviour
 
     private void OnMouseDown()
     {
-        PlayerController.money++;
-        Destroy(gameObject);
+        if (PlayerController.ammo > 0)
+        {
+            PlayerController.money++;
+            PlayerController.totalKills++;
+            Destroy(gameObject);
+        }
     }
 
     IEnumerator AllowMove()

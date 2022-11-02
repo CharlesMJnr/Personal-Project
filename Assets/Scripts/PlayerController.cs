@@ -16,13 +16,16 @@ public class PlayerController : MonoBehaviour
     private float cameraToPlaneDist = 10;
     private float shootMinRange = -8;
 
-    [SerializeField] private int maxAmmo = 5;
-    private int ammo;
+    private bool reloading = false;
 
     [SerializeField] TextMeshProUGUI ammoCountText;
-    [SerializeField] TextMeshProUGUI moneyCountText;
+    [SerializeField] TextMeshProUGUI scoreCountText;
+    [SerializeField] GameObject upgradeAmmoButton;
     
     public static int money = 0;
+    public static int totalKills = 0;
+    public static int maxAmmo = 5;
+    public static int ammo;
 
     // Start is called before the first frame update
     void Start()
@@ -35,8 +38,15 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MovePlayer();
+        scoreCountText.text = $"Money: {money}        Kills: {totalKills}";
+        if (reloading)
+        {
+            ammoCountText.text = "Reloading";
+        }
+        else
+        {
         ammoCountText.text = $"Ammo: {ammo}";
-        moneyCountText.text = $"Money: {money}";
+        }
         if (Input.GetMouseButtonDown(0) && transform.position.x > shootMinRange)
         {
             Shoot();
@@ -52,11 +62,18 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            reloading = true;
+            StartCoroutine("Reload");
             //reload when empty and trying to shoot
-            ammo = maxAmmo;
         }
     }
 
+    IEnumerator Reload()
+    {
+        yield return new WaitForSeconds(2);
+        ammo = maxAmmo;
+        reloading = false;
+    }
 
     void MovePlayer()
     {
@@ -79,6 +96,12 @@ public class PlayerController : MonoBehaviour
 
     public void UpgradeAmmo()
     {
-        maxAmmo = Mathf.FloorToInt((float)(maxAmmo * 1.2));
+        if (money >= maxAmmo)
+        {
+            money -= maxAmmo;
+            maxAmmo = Mathf.FloorToInt((float)(maxAmmo * 1.2));
+        }
     }
+
+
 }
