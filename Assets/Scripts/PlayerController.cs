@@ -15,30 +15,37 @@ public class PlayerController : MonoBehaviour
     private float bottomZbound = -3f;
     private float cameraToPlaneDist = 10;
     private float shootMinRange = -8;
+    private SpawnManager spawnManager;
 
     private bool reloading = false;
+    private AudioSource playerAudio;
 
     [SerializeField] TextMeshProUGUI ammoCountText;
     [SerializeField] TextMeshProUGUI scoreCountText;
     [SerializeField] GameObject upgradeAmmoButton;
+    public AudioClip gunShotSound;
+    public AudioClip reloadSound;
+    public AudioClip gunMissSound;
     
     public static int money = 0;
-    public static int totalKills = 0;
     public static int maxAmmo = 5;
     public static int ammo;
+    public static bool enemyKilled;
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = false;
+        spawnManager = SpawnManager.instance;
         ammo = maxAmmo;
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
         MovePlayer();
-        scoreCountText.text = $"Money: {money}        Kills: {totalKills}";
+        scoreCountText.text = $"Money: {money}        Kills: {spawnManager.totalKills}";
         if (reloading)
         {
             ammoCountText.text = "Reloading";
@@ -59,10 +66,20 @@ public class PlayerController : MonoBehaviour
         {
             //fire gun when ammo is available
             ammo--;
+            if (enemyKilled)
+            {
+                playerAudio.PlayOneShot(gunShotSound, 0.5f);
+                enemyKilled = false;
+            }
+            else
+            {
+                playerAudio.PlayOneShot(gunMissSound, 0.5f);
+            }
         }
-        else
+        else if(!reloading)
         {
             reloading = true;
+            playerAudio.PlayOneShot(reloadSound, 0.5f);
             StartCoroutine("Reload");
             //reload when empty and trying to shoot
         }

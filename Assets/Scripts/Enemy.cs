@@ -9,12 +9,12 @@ public class Enemy : MonoBehaviour
     public float standTimer = 3.0f;
     private SpawnManager spawnManager;
     private bool moveNow = true;
-    public bool gameOver;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
+        spawnManager = SpawnManager.instance;
         StartCoroutine(AllowMove());
     }
 
@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
         if(transform.position.x < -15)
         {
             spawnManager.gameOver = true;
+            Destroy(gameObject);
         }
 
     }
@@ -37,7 +38,8 @@ public class Enemy : MonoBehaviour
         if (PlayerController.ammo > 0)
         {
             PlayerController.money++;
-            PlayerController.totalKills++;
+            spawnManager.totalKills++;
+            PlayerController.enemyKilled = true;
             Destroy(gameObject);
         }
     }
