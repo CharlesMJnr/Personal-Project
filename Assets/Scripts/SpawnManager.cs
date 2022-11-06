@@ -62,7 +62,6 @@ public class SpawnManager : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log("Hello");
         gameOver = false;
         SceneManager.LoadScene(1);
         InvokeRepeating("StartEnemies", startDelay, spawnDelay);

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5897412332600492012}
   - component: {fileID: 5897412332600492013}
   - component: {fileID: 5897412332600492014}
-  - component: {fileID: 5897412332600492015}
   - component: {fileID: 5897412332600491922}
   - component: {fileID: 5897412332600491923}
   m_Layer: 0
@@ -85,19 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5897412332600492015
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5897412332600492008}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.548684, y: 3.0908866, z: 0.9544233}
-  m_Center: {x: 0.051403046, y: 1.5189264, z: 0.041667342}
 --- !u!54 &5897412332600491922
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,7 +115,6 @@ MonoBehaviour:
   speed: 3
   moveTimer: 5
   standTimer: 2
-  gameOver: 0
 --- !u!1001 &4687412732323725551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -187,8 +172,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70ab0d3e71b54ac4bbd703cb0a686c4d, type: 3}
+--- !u!1 &4687412732323759629 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100066, guid: 70ab0d3e71b54ac4bbd703cb0a686c4d, type: 3}
+  m_PrefabInstance: {fileID: 4687412732323725551}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4687412732323600941 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400066, guid: 70ab0d3e71b54ac4bbd703cb0a686c4d, type: 3}
   m_PrefabInstance: {fileID: 4687412732323725551}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &4298652792971385420
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4687412732323759629}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.3151448, y: 3.1843498, z: 1}
+  m_Center: {x: -0.0612003, y: 1.5611118, z: -7.124441e-16}

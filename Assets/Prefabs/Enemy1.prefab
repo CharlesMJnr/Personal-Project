@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5034713350819178585}
   - component: {fileID: 5034713350819178590}
   - component: {fileID: 5034713350819178591}
-  - component: {fileID: 5034713350819178588}
   - component: {fileID: 5034713350819178587}
   - component: {fileID: 5034713350819178584}
   m_Layer: 0
@@ -85,19 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5034713350819178588
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5034713350819178589}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.3803911, y: 3.2387614, z: 1}
-  m_Center: {x: 0.064265415, y: 1.587306, z: 0}
 --- !u!54 &5034713350819178587
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,7 +115,6 @@ MonoBehaviour:
   speed: 3
   moveTimer: 3
   standTimer: 2
-  gameOver: 0
 --- !u!1001 &9020676008730502515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -185,10 +170,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}
+      propertyPath: m_UpdateMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}
+--- !u!1 &9020676008730469331 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}
+  m_PrefabInstance: {fileID: 9020676008730502515}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9020676008730378227 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 2f8d00bf5057f624e949aef802595da9, type: 3}
   m_PrefabInstance: {fileID: 9020676008730502515}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1246500428532483084
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9020676008730469331}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.3523982, y: 2.8279939, z: 1}
+  m_Center: {x: 0.0034147897, y: 1.4122288, z: 3.57832e-17}

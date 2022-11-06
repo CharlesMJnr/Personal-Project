@@ -289,8 +289,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 5034713350819178589, guid: be4adf8d1acb72b41a75967298eede75, type: 3}
-  - {fileID: 2658362553795960272, guid: de5c5622ef9124c488d117c1f0a833df, type: 3}
-  - {fileID: 5897412332600492008, guid: 809e16ee42d6e3b41bb9ce20ddb15c56, type: 3}
   gameOver: 0
   totalKills: 0
   bestKills: 0
