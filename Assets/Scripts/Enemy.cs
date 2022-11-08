@@ -30,11 +30,6 @@ public class Enemy : MonoBehaviour
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
-        if(transform.position.x < -15)
-        {
-            spawnManager.gameOver = true;
-            Destroy(gameObject);
-        }
         if (dying)
         {
             transform.Rotate(new Vector3(0,0,-0.25f));
@@ -79,6 +74,15 @@ public class Enemy : MonoBehaviour
             enemyAnim.SetFloat("Speed_f", 0.5f);
             enemyAnim.SetBool("Static_b", false);
             StartCoroutine(AllowMove());
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            spawnManager.gameOver = true;
+            Destroy(gameObject);
         }
     }
 }

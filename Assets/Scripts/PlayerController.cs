@@ -27,16 +27,18 @@ public class PlayerController : MonoBehaviour
     public AudioClip reloadSound;
     public AudioClip gunMissSound;
     
-    public static int money = 0;
-    public static int maxAmmo = 5;
+    public static int money;
+    public static int maxAmmo;
     public static int ammo;
     public static bool enemyKilled;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Cursor.visible = false;
         spawnManager = SpawnManager.instance;
+        money = 0;
+        maxAmmo = 5;
         ammo = maxAmmo;
         playerAudio = GetComponent<AudioSource>();
     }
@@ -58,11 +60,16 @@ public class PlayerController : MonoBehaviour
         {
             Shoot();
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ammo = 0;
+            StartReloading();
+        }
     }
 
     private void Shoot()
     {
-        if(ammo > 0)
+        if (ammo > 0)
         {
             //fire gun when ammo is available
             ammo--;
@@ -76,13 +83,18 @@ public class PlayerController : MonoBehaviour
                 playerAudio.PlayOneShot(gunMissSound, 0.5f);
             }
         }
-        else if(!reloading)
+        else if (!reloading)
         {
-            reloading = true;
-            playerAudio.PlayOneShot(reloadSound, 0.5f);
-            StartCoroutine("Reload");
+            StartReloading();
             //reload when empty and trying to shoot
         }
+    }
+
+    private void StartReloading()
+    {
+        reloading = true;
+        playerAudio.PlayOneShot(reloadSound, 0.5f);
+        StartCoroutine("Reload");
     }
 
     IEnumerator Reload()

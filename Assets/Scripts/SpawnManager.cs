@@ -12,8 +12,8 @@ public class SpawnManager : MonoBehaviour
     private float topBound = 8.5f;
     private float bottomBound = -3.0f;
     private float rightSpawn = 27.5f;
-    private float startDelay = 2.0f;
-    private float spawnDelay = 2f;
+    private float spawnDelay = 3;
+    private float spawnTimer = 0;
     public int totalKills = 0;
     public int bestKills = 0;
 
@@ -45,12 +45,11 @@ public class SpawnManager : MonoBehaviour
         {
             Cursor.visible = true;
         }
-    }
-
-    private void StartEnemies()
-    {
-        int randomEnemy = Random.Range(0, enemyPrefabs.Length);
-        Instantiate(enemyPrefabs[randomEnemy], CreateSpawnPosition(), enemyPrefabs[randomEnemy].transform.rotation);
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer > spawnDelay)
+        {
+            SpawnEnemies();
+        }
     }
 
     private Vector3 CreateSpawnPosition()
@@ -64,6 +63,15 @@ public class SpawnManager : MonoBehaviour
     {
         gameOver = false;
         SceneManager.LoadScene(1);
-        InvokeRepeating("StartEnemies", startDelay, spawnDelay);
+        spawnDelay = 3;
+        spawnTimer = 0;
+    }
+
+    private void SpawnEnemies()
+    {
+        int randomEnemy = Random.Range(0, enemyPrefabs.Length);
+        Instantiate(enemyPrefabs[randomEnemy], CreateSpawnPosition(), enemyPrefabs[randomEnemy].transform.rotation);
+        spawnDelay *= 0.999f;
+        spawnTimer = 0;
     }
 }
