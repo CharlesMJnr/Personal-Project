@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
     private bool dying = false;
     private Animator enemyAnim;
 
+    private float lyingFlatZ = -0.5f;
+    private Vector3 rotationSpeedVector = new Vector3(0, 0, -0.4f);
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,11 +33,16 @@ public class Enemy : MonoBehaviour
         {
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
-        if (dying)
+        else if (dying)
         {
-            transform.Rotate(new Vector3(0,0,-0.25f));
+            DeathMovement();
         }
-        if(transform.rotation.z <= -0.7)
+    }
+
+    private void DeathMovement()
+    {
+        transform.Rotate(rotationSpeedVector);
+        if (transform.rotation.z <= lyingFlatZ)
         {
             Destroy(gameObject);
         }
@@ -42,21 +50,21 @@ public class Enemy : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (PlayerController.ammo > 0)
+        if (PlayerController.ammo > 0 && !dying)
         {
             PlayerController.money++;
             spawnManager.totalKills++;
-            PlayerController.enemyKilled = true;
             dying = true;
             enemyAnim.SetFloat("Speed_f", 0);
             enemyAnim.SetBool("Static_b", true);
         }
+        PlayerController.enemyKilled = true;
     }
 
     IEnumerator AllowMove()
     {
         yield return new WaitForSeconds(moveTimer);
-        if (!spawnManager.gameOver &&!dying)
+        if (!spawnManager.gameOver && !dying)
         {
             moveNow = false;
             enemyAnim.SetFloat("Speed_f", 0);
@@ -68,7 +76,7 @@ public class Enemy : MonoBehaviour
     IEnumerator WaitHere()
     {
         yield return new WaitForSeconds(standTimer);
-        if (!spawnManager.gameOver &&!dying)
+        if (!spawnManager.gameOver && !dying)
         {
             moveNow = true;
             enemyAnim.SetFloat("Speed_f", 0.5f);

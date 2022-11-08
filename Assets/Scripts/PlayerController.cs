@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public static int ammo;
     public static bool enemyKilled;
 
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -46,24 +47,31 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
-        scoreCountText.text = $"Money: {money}        Kills: {spawnManager.totalKills}";
+        if (!spawnManager.gamePaused)
+        {
+            MovePlayer();
+            UpdateScoreText();
+            if (Input.GetMouseButtonDown(0) && transform.position.x > shootMinRange)
+            {
+                Shoot();
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ammo = 0;
+                StartReloading();
+            }
+        }
+    }
+
+    private void UpdateScoreText()
+    {
         if (reloading)
         {
-            ammoCountText.text = "Reloading";
+            scoreCountText.text = $"Money: {money}        Kills: {spawnManager.totalKills}      Reloading";
         }
         else
         {
-        ammoCountText.text = $"Ammo: {ammo}";
-        }
-        if (Input.GetMouseButtonDown(0) && transform.position.x > shootMinRange)
-        {
-            Shoot();
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ammo = 0;
-            StartReloading();
+            scoreCountText.text = $"Money: {money}        Kills: {spawnManager.totalKills}      Ammo: {ammo}";
         }
     }
 
@@ -120,15 +128,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             Cursor.visible = true;
-        }
-    }
-
-    public void UpgradeAmmo()
-    {
-        if (money >= maxAmmo)
-        {
-            money -= maxAmmo;
-            maxAmmo = Mathf.FloorToInt((float)(maxAmmo * 1.2));
         }
     }
 

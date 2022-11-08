@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 
 public class SpawnManager : MonoBehaviour
 {
@@ -16,6 +21,7 @@ public class SpawnManager : MonoBehaviour
     private float spawnTimer = 0;
     public int totalKills = 0;
     public int bestKills = 0;
+    public bool gamePaused = false;
 
 
     void Awake()
@@ -50,6 +56,24 @@ public class SpawnManager : MonoBehaviour
         {
             SpawnEnemies();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+    }
+
+    public void PauseGame()
+    {
+        if(Time.timeScale != 0)
+        {
+            Time.timeScale = 0;
+            gamePaused = true;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            gamePaused = false;
+        }
     }
 
     private Vector3 CreateSpawnPosition()
@@ -73,5 +97,14 @@ public class SpawnManager : MonoBehaviour
         Instantiate(enemyPrefabs[randomEnemy], CreateSpawnPosition(), enemyPrefabs[randomEnemy].transform.rotation);
         spawnDelay *= 0.999f;
         spawnTimer = 0;
+    }
+
+    public void Exit()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
     }
 }
