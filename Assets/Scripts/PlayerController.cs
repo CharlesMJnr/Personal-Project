@@ -26,11 +26,13 @@ public class PlayerController : MonoBehaviour
     public AudioClip gunShotSound;
     public AudioClip reloadSound;
     public AudioClip gunMissSound;
-    
+
     public static int money;
     public static int maxAmmo;
     public static int ammo;
     public static bool enemyKilled;
+
+    private GameObject playerUnit;
 
 
     // Start is called before the first frame update
@@ -42,6 +44,7 @@ public class PlayerController : MonoBehaviour
         maxAmmo = 5;
         ammo = maxAmmo;
         playerAudio = GetComponent<AudioSource>();
+        playerUnit = GameObject.Find("Player Unit");
     }
 
     // Update is called once per frame
@@ -50,6 +53,7 @@ public class PlayerController : MonoBehaviour
         if (!spawnManager.gamePaused)
         {
             MovePlayer();
+            PlayerUnitAiming();
             UpdateScoreText();
             if (Input.GetMouseButtonDown(0) && transform.position.x > shootMinRange)
             {
@@ -131,5 +135,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void PlayerUnitAiming()
+    {
+        float oppLine = transform.position.z - playerUnit.transform.position.z;
+        float adjLine = transform.position.x - playerUnit.transform.position.x;
+
+        float aimAngle = Mathf.Atan2(adjLine, oppLine)*Mathf.Rad2Deg;
+        Quaternion newRotation = Quaternion.AngleAxis(aimAngle,Vector3.up);
+        playerUnit.transform.eulerAngles = new Vector3(0, aimAngle, 0);
+    }
 
 }
