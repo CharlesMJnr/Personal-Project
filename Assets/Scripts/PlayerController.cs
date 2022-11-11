@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public static bool enemyKilled;
 
     private GameObject playerUnit;
+    public GameObject gunMuzzleFire;
 
 
     // Start is called before the first frame update
@@ -45,19 +46,21 @@ public class PlayerController : MonoBehaviour
         ammo = maxAmmo;
         playerAudio = GetComponent<AudioSource>();
         playerUnit = GameObject.Find("Player Unit");
+        gunMuzzleFire.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        MovePlayer();
         if (!spawnManager.gamePaused)
         {
-            MovePlayer();
             PlayerUnitAiming();
             UpdateScoreText();
             if (Input.GetMouseButtonDown(0) && transform.position.x > shootMinRange)
             {
                 Shoot();
+                Debug.DrawLine(Vector3.zero, transform.position, Color.black, 2.5f);
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -85,6 +88,8 @@ public class PlayerController : MonoBehaviour
         {
             //fire gun when ammo is available
             ammo--;
+            gunMuzzleFire.SetActive(true);
+            StartCoroutine("GunMuzzleTimer");
             if (enemyKilled)
             {
                 playerAudio.PlayOneShot(gunShotSound, 0.5f);
@@ -100,6 +105,12 @@ public class PlayerController : MonoBehaviour
             StartReloading();
             //reload when empty and trying to shoot
         }
+    }
+
+    IEnumerator GunMuzzleTimer()
+    {
+        yield return new WaitForSeconds(0.15f);
+        gunMuzzleFire.SetActive(false);
     }
 
     private void StartReloading()
